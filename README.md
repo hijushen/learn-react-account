@@ -1,7 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ##[English] This is personal partise react demo, lean something account Mgr.
-##[中文] 个人React练习项目, 相关财务管理
+##[中文] 个人React练习项目, 相关财务管理 
 
 ## Available Scripts
 
