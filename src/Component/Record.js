@@ -3,10 +3,10 @@ import React, { Component } from 'react';
 class Record extends Component {
     render() {
         return (
-        <tr>
-            <td>2019-01-01</td>
-            <td>收入</td>
-            <td>32</td>
+        <tr key={this.props.record.id}>
+            <td>{this.props.record.date}</td>
+            <td>{this.props.record.title}</td>
+            <td>{this.props.record.amount}</td>
         </tr>
         );
     }

@@ -1,39 +1,57 @@
 import React, { Component } from 'react';
-import Record from './Record'
+import Record from './Record';
+import axios from 'axios';
 
 class Records extends Component {
-
-constructor(){
-  super();
-  this.state = {
-    records:[
-      {id:1, "date":"2018-11-01", "title":"收入", "amount":1},
-      {id:1, "date":"2019-11-01", "title":"收入", "amount":2},
-      {id:1, "date":"2017-11-01", "title":"收入", "amount":3},
-      {id:1, "date":"2015-11-01", "title":"收入", "amount":423},
-    ]
+  constructor() {
+    super();
+    this.state = {
+      error: null,
+      isLoaded: false,
+      records: []
+    }
   }
-}
+
+  componentDidMount() {
+    axios.get("https://5a54227777e1d20012fa0723.mockapi.io/api/v1/records").then(
+      response => this.setState({
+        records: response.data,
+        isLoaded: true
+      })
+    ).catch(
+      error => this.setState({
+        isLoaded: true,
+        error
+      })
+    )
+  }
 
   render() {
-    return (
-      <div>
-        <h2>Records</h2>
-        <table className="table table-boardered">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Title</th>
-              <th>Amount</th>
-            </tr>
-          </thead>
-          <tbody>
-              <Record />
-          </tbody>
+    const { error, isLoaded, records } = this.state;
 
-        </table>
-      </div>
-    );
+    if (error) {
+      return <div>Error: {error.message}</div>;
+    } else if (!isLoaded) {
+      return <div>Loading...</div>;
+    } else {
+      return (
+        <div>
+          <h2>Records</h2>
+          <table className="table table-bordered">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Title</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              {records.map((record) => <Record key={record.id} record = {record} />)}
+            </tbody>
+          </table>
+        </div>
+      );
+    }
   }
 }
 
